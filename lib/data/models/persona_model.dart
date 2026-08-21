@@ -1,3 +1,4 @@
+/// Modelo de una persona tal como la representa la API.
 class Persona {
   final int? id;
   final String identificacion;
@@ -17,6 +18,7 @@ class Persona {
     this.direccion,
   });
 
+  /// Construye una persona a partir de la respuesta JSON del backend.
   factory Persona.fromJson(Map<String, dynamic> json) => Persona(
         id: json['id'] as int?,
         identificacion: json['identificacion'] as String,
@@ -27,6 +29,7 @@ class Persona {
         direccion: json['direccion'] as String?,
       );
 
+  /// Convierte la persona al formato JSON que esperan POST y PUT.
   Map<String, dynamic> toJson() => {
         if (id != null) 'id': id,
         'identificacion': identificacion,
@@ -37,5 +40,6 @@ class Persona {
         'direccion': direccion,
       };
 
+  /// Nombre listo para mostrar en la interfaz.
   String get nombreCompleto => '$nombre $apellido';
 }
