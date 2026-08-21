@@ -1,10 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../data/models/persona_model.dart';
 import '../providers/persona_provider.dart';
 import 'persona_form_screen.dart';
 
 class PersonaListScreen extends ConsumerWidget {
   const PersonaListScreen({super.key});
+
+  void _mostrarInformacion(BuildContext context, Persona persona) {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: Text(persona.nombreCompleto),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Identificación: ${persona.identificacion}'),
+            Text('Nombre: ${persona.nombre}'),
+            Text('Apellido: ${persona.apellido}'),
+            Text('Email: ${persona.email}'),
+            Text('Teléfono: ${persona.telefono ?? 'No registrado'}'),
+            Text('Dirección: ${persona.direccion ?? 'No registrada'}'),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Cerrar'),
+          ),
+        ],
+      ),
+    );
+  }
 
   void _confirmarEliminar(BuildContext context, WidgetRef ref, int id, String nombre) {
     showDialog(
@@ -49,7 +77,11 @@ class PersonaListScreen extends ConsumerWidget {
               trailing: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  IconButton(icon: const Icon(Icons.info_outline), onPressed: () {}),
+                  IconButton(
+                    icon: const Icon(Icons.info_outline),
+                    tooltip: 'Ver información',
+                    onPressed: () => _mostrarInformacion(context, persona),
+                  ),
                   IconButton(
                     icon: const Icon(Icons.edit),
                     onPressed: () {

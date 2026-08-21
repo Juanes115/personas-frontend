@@ -2,9 +2,7 @@ import 'package:dio/dio.dart';
 import '../models/persona_model.dart';
 
 class PersonaRepository {
-  // En emulador Android usa 10.0.2.2 en vez de 127.0.0.1
-  // Pídele a Breiro su IP local cuando prueben juntos en dispositivo físico
-  final Dio _dio = Dio(BaseOptions(baseUrl: 'http://10.0.2.2:3000/api'));
+  final Dio _dio = Dio(BaseOptions(baseUrl: 'http://localhost:3000/api'));
 
   Future<List<Persona>> fetchPersonas() async {
     try {
