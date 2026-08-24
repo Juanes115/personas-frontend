@@ -4,7 +4,15 @@ import '../models/paginated_persona_response.dart';
 
 /// Encapsula todas las peticiones HTTP relacionadas con personas.
 class PersonaRepository {
-  final Dio _dio = Dio(BaseOptions(baseUrl: 'http://localhost:3000/api'));
+  static const String _defaultUrl = String.fromEnvironment(
+    'BACKEND_URL',
+    defaultValue: 'http://localhost:3000/api',
+  );
+
+  final Dio _dio;
+
+  PersonaRepository({String? baseUrl})
+      : _dio = Dio(BaseOptions(baseUrl: baseUrl ?? _defaultUrl));
 
   /// Obtiene la lista paginada de personas desde la API.
   Future<PaginatedPersonaResponse> fetchPersonas({
