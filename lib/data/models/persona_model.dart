@@ -7,6 +7,7 @@ class Persona {
   final String email;
   final String? telefono;
   final String? direccion;
+  final String? foto;
 
   Persona({
     this.id,
@@ -16,17 +17,21 @@ class Persona {
     required this.email,
     this.telefono,
     this.direccion,
+    this.foto,
   });
 
   /// Construye una persona a partir de la respuesta JSON del backend.
   factory Persona.fromJson(Map<String, dynamic> json) => Persona(
-        id: json['id'] as int?,
-        identificacion: json['identificacion'] as String,
-        nombre: json['nombre'] as String,
-        apellido: json['apellido'] as String,
-        email: json['email'] as String,
-        telefono: json['telefono'] as String?,
-        direccion: json['direccion'] as String?,
+        id: json['id'] is int
+            ? json['id'] as int
+            : (json['id'] != null ? int.tryParse(json['id'].toString()) : null),
+        identificacion: json['identificacion']?.toString() ?? '',
+        nombre: json['nombre']?.toString() ?? '',
+        apellido: json['apellido']?.toString() ?? '',
+        email: json['email']?.toString() ?? '',
+        telefono: json['telefono']?.toString(),
+        direccion: json['direccion']?.toString(),
+        foto: json['foto']?.toString(),
       );
 
   /// Convierte la persona al formato JSON que esperan POST y PUT.
@@ -38,6 +43,7 @@ class Persona {
         'email': email,
         'telefono': telefono,
         'direccion': direccion,
+        'foto': foto,
       };
 
   /// Nombre listo para mostrar en la interfaz.
